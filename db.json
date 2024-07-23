@@ -1,0 +1,12 @@
+{
+    "post": [
+        {"id":1, "title":"Barrer"},
+        {"id":2, "title":"Trapear"},
+        {"id":3, "title":"Limpiar"},
+        {"id":4, "title":"Lavar"},
+        {"id":5, "title":"Cocinar"}
+    ],
+    "profile": {
+        "name": "danizulu7"
+    }
+}
