@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchTasks() {
     try {
       const response = await fetch(
-        "https://jsonplaceholder.typicode.com/todos"
+        "https://my-json-server.typicode.com/danizulu7/to-do-app/post"
       );
       const data = await response.json();
       tasks = data.slice(0, 10);
@@ -34,33 +34,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  async function addTask() {
+  function addTask() {
     const taskTitle = taskInput.value.trim();
     if (taskTitle === "") return;
 
     const newTask = {
+      id: tasks.length ? Math.max(tasks.map((task) => task.id)) + 1 : 1,
       title: taskTitle,
       completed: false,
     };
 
-    try {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/todos",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newTask),
-        }
-      );
-      const addedTask = await response.json();
-      tasks.push(addedTask);
-      renderTasks();
-      taskInput.value = "";
-    } catch (error) {
-      console.error("Error adding task:", error);
-    }
+    tasks.push(newTask);
+    renderTasks();
+    taskInput.value = "";
   }
 
   function renderTasks() {
@@ -90,64 +76,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  window.toggleCompleteTask = async function (id) {
+  window.toggleCompleteTask = function (id) {
     const task = tasks.find((task) => task.id === id);
     if (!task) return;
 
-    try {
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/todos/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...task, completed: !task.completed }),
-        }
-      );
-      const updatedTask = await response.json();
-      tasks = tasks.map((task) => (task.id === id ? updatedTask : task));
-      renderTasks();
-    } catch (error) {
-      console.error("Error toggling complete task:", error);
-    }
+    task.completed = !task.completed;
+    renderTasks();
   };
 
-  window.editTask = async function (id) {
+  window.editTask = function (id) {
     const task = tasks.find((task) => task.id === id);
     if (!task) return;
 
     const newTitle = prompt("Edit task title:", task.title);
     if (!newTitle) return;
 
-    try {
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/todos/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...task, title: newTitle }),
-        }
-      );
-      const updatedTask = await response.json();
-      tasks = tasks.map((task) => (task.id === id ? updatedTask : task));
-      renderTasks();
-    } catch (error) {
-      console.error("Error editing task:", error);
-    }
+    task.title = newTitle;
+    renderTasks();
   };
 
-  window.deleteTask = async function (id) {
-    try {
-      await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
-        method: "DELETE",
-      });
-      tasks = tasks.filter((task) => task.id !== id);
-      renderTasks();
-    } catch (error) {
-      console.error("Error deleting task:", error);
-    }
+  window.deleteTask = function (id) {
+    tasks = tasks.filter((task) => task.id !== id);
+    renderTasks();
   };
 });
