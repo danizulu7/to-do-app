@@ -1,11 +1,11 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Playwrite DK Uloopet", cursive;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #f0f0f0;
+  background-color: #474242;
 }
 
 .container {
@@ -16,6 +16,7 @@ body {
   width: 100%;
   max-width: 400px;
   text-align: center;
+  margin-block: auto;
 }
 
 .input-container {
@@ -26,16 +27,18 @@ body {
 #task-input {
   width: 70%;
   padding: 5px;
+  font-family: 'Playwrite DK Uloopet';
 }
 
 #add-task-btn {
   width: 25%;
   padding: 5px;
-  background-color: #007bff;
+  background-color: #1b73d1;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-family: 'Playwrite DK Uloopet';
 }
 
 .filters {
@@ -48,16 +51,28 @@ body {
   flex: 1;
   padding: 5px;
   margin: 0 5px;
-  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-family: 'Playwrite DK Uloopet';
 }
 
 #task-list {
   list-style-type: none;
   padding: 0;
+}
+
+.completed {
+  background-color: #48a954;
+}
+
+.pending {
+  background-color: #d3513c;
+}
+
+.all {
+  background-color: #1b73d1;
 }
 
 .task-item {
@@ -74,6 +89,18 @@ body {
 
 .task-item button {
   margin-left: 10px;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.icon-image {
+  width: 24px;
+  height: 24px;
 }
 
 @media (max-width: 600px) {

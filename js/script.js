@@ -65,11 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
       taskItem.innerHTML = `
                 <span>${task.title}</span>
                 <div>
-                    <button onclick="toggleCompleteTask(${task.id})">${
-        task.completed ? "Undo" : "Complete"
+                    <button class="icon-button" onclick="toggleCompleteTask(${task.id})">${
+        task.completed ? "Undo" : "<img src='./images/icons/complete.png' alt='Icon' class='icon-image'>"
       }</button>
-                    <button onclick="editTask(${task.id})">Edit</button>
-                    <button onclick="deleteTask(${task.id})">Delete</button>
+                    <button class="icon-button" onclick="editTask(${task.id})"><img src="./images/icons/edit.png" alt="Icon" class="icon-image"></button>
+                    <button class="icon-button" onclick="deleteTask(${task.id})"><img src="./images/icons/delete.png" alt="Icon" class="icon-image"></button>
                 </div>
             `;
       taskList.appendChild(taskItem);
