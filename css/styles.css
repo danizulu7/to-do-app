@@ -27,7 +27,7 @@ body {
 #task-input {
   width: 70%;
   padding: 5px;
-  font-family: 'Playwrite DK Uloopet';
+  font-family: "Playwrite DK Uloopet";
 }
 
 #add-task-btn {
@@ -38,7 +38,7 @@ body {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-family: 'Playwrite DK Uloopet';
+  font-family: "Playwrite DK Uloopet";
 }
 
 .filters {
@@ -55,7 +55,7 @@ body {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-family: 'Playwrite DK Uloopet';
+  font-family: "Playwrite DK Uloopet";
 }
 
 #task-list {

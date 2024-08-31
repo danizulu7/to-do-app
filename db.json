@@ -1,12 +1,12 @@
 {
-    "post": [
-        {"id":1, "title":"Buy Groceries"},
-        {"id":2, "title":"Send Reports"},
-        {"id":3, "title":"Doctor's Appointment"},
-        {"id":4, "title":"Fix the Car"},
-        {"id":5, "title":"Study for Exam"}
-    ],
-    "profile": {
-        "name": "danizulu7"
-    }
+  "post": [
+    { "id": 1, "title": "Buy Groceries" },
+    { "id": 2, "title": "Send Reports" },
+    { "id": 3, "title": "Doctor's Appointment" },
+    { "id": 4, "title": "Fix the Car" },
+    { "id": 5, "title": "Study for Exam" }
+  ],
+  "profile": {
+    "name": "danizulu7"
+  }
 }

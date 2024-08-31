@@ -10,10 +10,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch tasks on page load
   fetchTasks();
 
-  // Add task event listener
+  // Add task with clic event listener
   addTaskBtn.addEventListener("click", addTask);
 
-  // Filter tasks event listeners
+  // Add task with Enter key
+  taskInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      addTask();
+    }
+  });
+
+  // Filter tasks buttons event listeners
   filterBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       filter = btn.dataset.filter;
@@ -21,6 +28,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Event delegation for task actions
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    const taskItem = target.closest(".task-item");
+    if (!taskItem) return;
+
+    const taskId = parseInt(taskItem.dataset.id);
+
+    if (target.classList.contains("complete-btn")) {
+      toggleCompleteTask(taskId);
+    } else if (target.classList.contains("edit-btn")) {
+      editTask(taskId);
+    } else if (target.classList.contains("delete-btn")) {
+      deleteTask(taskId);
+    }
+  });
+
+  //fetch to API
   async function fetchTasks() {
     try {
       const response = await fetch(
@@ -34,12 +59,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  //add new tasks
   function addTask() {
     const taskTitle = taskInput.value.trim();
     if (taskTitle === "") return;
 
     const newTask = {
-      id: tasks.length ? Math.max(tasks.map((task) => task.id)) + 1 : 1,
+      id: tasks.length ? Math.max(...tasks.map((task) => task.id)) + 1 : 1,
       title: taskTitle,
       completed: false,
     };
@@ -49,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     taskInput.value = "";
   }
 
+  //filter and render tasks
   function renderTasks() {
     taskList.innerHTML = "";
 
@@ -63,40 +90,65 @@ document.addEventListener("DOMContentLoaded", () => {
       taskItem.classList.add("task-item");
       if (task.completed) taskItem.classList.add("completed");
       taskItem.innerHTML = `
-                <span>${task.title}</span>
-                <div>
-                    <button class="icon-button" onclick="toggleCompleteTask(${task.id})">${
-        task.completed ? "Undo" : "<img src='./images/icons/complete.png' alt='Icon' class='icon-image'>"
-      }</button>
-                    <button class="icon-button" onclick="editTask(${task.id})"><img src="./images/icons/edit.png" alt="Icon" class="icon-image"></button>
-                    <button class="icon-button" onclick="deleteTask(${task.id})"><img src="./images/icons/delete.png" alt="Icon" class="icon-image"></button>
-                </div>
-            `;
+        <span>${task.title}</span>
+        <div>
+          <button class="icon-button complete-btn">
+            <img src="${
+              task.completed
+                ? "./images/icons/cancel.png"
+                : "./images/icons/complete.png"
+            }" alt="Icon" class="icon-image">
+          </button>
+          <button class="icon-button edit-btn">
+            <img src="./images/icons/edit.png" alt="Icon" class="icon-image">
+          </button>
+          <button class="icon-button delete-btn">
+            <img src="./images/icons/delete.png" alt="Icon" class="icon-image">
+          </button>
+        </div>
+      `;
+
       taskList.appendChild(taskItem);
+
+      // Event listeners for task buttons
+      taskItem.querySelector(".complete-btn").addEventListener("click", () => {
+        toggleCompleteTask(task.id);
+      });
+
+      taskItem.querySelector(".edit-btn").addEventListener("click", () => {
+        editTask(task.id);
+      });
+
+      taskItem.querySelector(".delete-btn").addEventListener("click", () => {
+        deleteTask(task.id);
+      });
     });
   }
 
-  window.toggleCompleteTask = function (id) {
+  //toggle complete tasks
+  function toggleCompleteTask(id) {
     const task = tasks.find((task) => task.id === id);
     if (!task) return;
 
     task.completed = !task.completed;
     renderTasks();
-  };
+  }
 
-  window.editTask = function (id) {
+  // edit tasks
+  function editTask(id) {
     const task = tasks.find((task) => task.id === id);
     if (!task) return;
 
     const newTitle = prompt("Edit task title:", task.title);
-    if (!newTitle) return;
+    if (newTitle !== null && newTitle.trim() !== "") {
+      task.title = newTitle;
+      renderTasks();
+    }
+  }
 
-    task.title = newTitle;
-    renderTasks();
-  };
-
-  window.deleteTask = function (id) {
+  //delete tasks
+  function deleteTask(id) {
     tasks = tasks.filter((task) => task.id !== id);
     renderTasks();
-  };
+  }
 });
